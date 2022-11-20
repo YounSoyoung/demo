@@ -22,9 +22,9 @@ public class TodoRepositoryMemoryImpl implements TodoRepository{
     private static final Map<Long, ToDo> toDoMap = new HashMap<>();
 
     static { //보통 생성자를 통해 초기화를 해주는데 static은 생성자와 연동이 안된다.
-        toDoMap.put(1L, new ToDo(1L, "김철수", "저녁밥 만들기", false));
-        toDoMap.put(2L, new ToDo(2L, "박영희", "산책가기", false));
-        toDoMap.put(3L, new ToDo(3L, "김민수", "노래연습하기", true));
+        toDoMap.put(1L, new ToDo("저녁밥 만들기"));
+        toDoMap.put(2L, new ToDo("산책가기"));
+        toDoMap.put(3L, new ToDo("노래연습하기"));
     }
 
     @Override
@@ -32,7 +32,7 @@ public class TodoRepositoryMemoryImpl implements TodoRepository{
         if(todo == null) return false;
 
         toDoMap.put(todo.getId(), todo);
-        return false;
+        return true;
     }
 
     @Override
