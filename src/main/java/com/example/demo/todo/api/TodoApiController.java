@@ -57,11 +57,17 @@ public class TodoApiController {
     //할 일 개별 조회 요청
     //URI : /api/todos/3 => 3번 할 일 조회해서 클라이언트에게 리턴
     @GetMapping("/{id}")
-    public TodoDTO todo(@PathVariable long id){
+    public ResponseEntity<?> todo(@PathVariable long id){
 
         log.info("/api/todos/{} GET request!", id);
 
-        return service.findOneServ(id);
+        try{
+            return ResponseEntity.ok().body(service.findOneServ(id));
+        }catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
+
+
     }
 
     //할 일 삭제 요청
