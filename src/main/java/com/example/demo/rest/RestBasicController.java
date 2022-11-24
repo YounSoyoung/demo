@@ -16,7 +16,7 @@ import java.util.Map;
 
 @RestController//@Controller + @ResponseBody
 //@Controller //스프링 컨테이너에 빈으로 등록 + 스프링의 HandlerMapping이 이 클래스를 찾아낼 수 있도록 한다.
-//@ResponseBody //응답을 할 때 html을 응답하는 것이 아니라 json으로 응답하겠다 => REST(모바일 환경에서 열게 될 수도 있으므로)
+//@ResponseBody //응답을 할 때 html로 응답하는 것이 아니라 json으로 응답하겠다 => REST(모바일 환경에서 열게 될 수도 있으므로)
 public class RestBasicController {
 
     @GetMapping("/china")

@@ -27,7 +27,7 @@ public class RestJsonController {
         //로그 찍을 때 System.out.println을 사용하면 안되는 이유)
         //1. 메모리를 많이 잡아먹는다.
         //2. 제대로 된 추적이 안된다.
-        log.info("/json/major POST request! = {}", majorList); //{}을 사용하면 nickName이 중괄호 안으로 들어간다.
+        log.info("/json/major POST request! = {}", majorList); //{}을 사용하면 majorList가 중괄호 안으로 들어간다.
         return null;
     }
 

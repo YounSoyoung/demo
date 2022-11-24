@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("/api/todos")
-@RequiredArgsConstructor // (구글링 더 해보기) 이 걸 사용하면 생성자 주입이 자동으로 된다.
+@RequiredArgsConstructor //이 어노테이션을 사용하면 생성자 주입이 자동으로 된다.
 public class TodoApiController {
 
     private final TodoService service;
