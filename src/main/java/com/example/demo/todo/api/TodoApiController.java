@@ -17,6 +17,7 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/api/todos")
 @RequiredArgsConstructor //이 어노테이션을 사용하면 생성자 주입이 자동으로 된다.
+@CrossOrigin //다른 서버의 요청 허용
 public class TodoApiController {
 
     private final TodoService service;
@@ -57,28 +58,45 @@ public class TodoApiController {
     //할 일 개별 조회 요청
     //URI : /api/todos/3 => 3번 할 일 조회해서 클라이언트에게 리턴
     @GetMapping("/{id}")
-    public ResponseEntity<?> todo(@PathVariable long id){
+    public ResponseEntity<?> todo(@PathVariable String  id){
 
         log.info("/api/todos/{} GET request!", id);
 
-        try{
-            return ResponseEntity.ok().body(service.findOneServ(id));
-        }catch (Exception e){
-            return ResponseEntity.notFound().build();
-        }
+        if(id == null) return ResponseEntity.badRequest().build();
 
-
+//        try{
+//            return ResponseEntity.ok().body(service.findOneServ(id));
+//        }catch (Exception e){
+//            return ResponseEntity.notFound().build();
+//        }
+        TodoDTO dto = service.findOneServ(id);
+        if(dto == null) return ResponseEntity.notFound().build();
+        return  ResponseEntity.ok().body(dto);
     }
 
     //할 일 삭제 요청
     //URI: /api/todos/3 : DELETE
     // -> 3번 할 일을 삭제 후 삭제된 이후 갱신된 할 일 목록 리턴
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable long id){
+    public ResponseEntity<?> delete(@PathVariable String id){
         log.info("/api/todos/{} DELETE request!", id);
 
         try{
             FindAllDTO dtos = service.deleteServ(id);
+            return ResponseEntity.ok().body(dtos);
+        }catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
+
+    }
+
+    //할 일 수정 요청
+    @PutMapping
+    public ResponseEntity<?> update(@RequestBody ToDo toDo){
+        log.info("/api/todos PUT request! - {}", toDo);
+
+        try{
+            FindAllDTO dtos = service.update(toDo);
             return ResponseEntity.ok().body(dtos);
         }catch (Exception e){
             return ResponseEntity.notFound().build();

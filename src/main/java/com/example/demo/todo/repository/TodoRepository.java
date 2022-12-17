@@ -1,9 +1,11 @@
 package com.example.demo.todo.repository;
 
 import com.example.demo.todo.entity.ToDo;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
+@Mapper
 //역할: 할 일 데이터를 CRUD한다.
 public interface TodoRepository {
     //할 일 생성 기능
@@ -19,8 +21,11 @@ public interface TodoRepository {
     List<ToDo> findAll();
 
     //할 일 개별조회 기능
-    ToDo findOne(long id);
+    ToDo findOne(String id);
 
     //할일 삭제 기능
-    boolean remove(long id);
+    boolean remove(String id);
+
+    //할 일 수정
+    boolean modify(ToDo todo);
 }
