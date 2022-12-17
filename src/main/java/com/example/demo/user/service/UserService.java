@@ -5,6 +5,7 @@ import com.example.demo.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,12 +13,17 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder encoder;
 
     //회원 가입 기능
     public UserEntity createServ(final UserEntity userEntity) throws RuntimeException{ //객체의 불변성을 위해 final을 달아준다.
         if(userEntity == null || userEntity.getEmail() == null){
             throw new RuntimeException("Invalid args!");
         }
+
+        //register하기 전에 패스워드를 인코딩
+        String rawPw = userEntity.getPassword();
+        userEntity.setPassword(encoder.encode(rawPw));
         boolean flag = userRepository.register(userEntity);
 
         return flag ? getByCredential(userEntity.getEmail()) : null;
@@ -36,7 +42,7 @@ public class UserService {
         if(user == null) throw new RuntimeException("가입된 회원이 아닙니다"); //throw에 걸리면 return 효과가 나서 밑에 코드들이 실행되지 않는다
 
         //패스워드가 일치하는가
-        if(!password.equals(user.getPassword())){
+        if(!encoder.matches(password, user.getPassword())){
             throw new RuntimeException("비밀번호가 틀렸습니다");
         }
 
