@@ -11,6 +11,7 @@
         WHERE email=#{email}
     </select>
 
+<!--    true가 반환되면 이메일이 중복됐다는 뜻, 즉 존재하는 이메일-->
     <select id="existByEmail" resultType="boolean">
         SELECT COUNT(*)
         FROM tbl_user

@@ -59,4 +59,12 @@ public class UserController {
 
     }
 
+    // //RequestBody나 PathValuable이 없으므로 /auth/check?email=apple@gmail.com
+    @GetMapping("/check")
+    public ResponseEntity<?> checkEmail(String email) { //RequestBody나 PathValuable이 없으므로
+        boolean flag = userService.isDuplicate(email);
+        log.info("{} 중복여부?? - {}", email, flag);
+        return ResponseEntity.ok().body(flag);
+    }
+
 }

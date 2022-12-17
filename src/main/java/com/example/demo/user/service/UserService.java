@@ -49,4 +49,9 @@ public class UserService {
         return user; //로그인 성공시 회원정보 리턴
 
     }
+
+    // 이메일 중복체크(회원가입할 때)
+    public boolean isDuplicate(String email){
+        return userRepository.existByEmail(email);
+    }
 }
