@@ -14,7 +14,7 @@ import java.util.Date;
 
 @Service
 @Slf4j
-//토클 발행하는 클래스
+//토큰 발행하는 클래스
 public class TokenProvider {
 
     //우리 사이트의 서명(랜덤문자열 생성(UUID 같은 거 사용) - 512바이트 이상)

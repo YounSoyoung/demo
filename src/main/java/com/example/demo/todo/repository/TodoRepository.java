@@ -18,7 +18,7 @@ public interface TodoRepository {
     boolean save(ToDo todo); //생성이 되고 나서는 성공했는지 못했는지 알려줘야함으로 boolean 타입
 
     //할 일 목록 조회 기능
-    List<ToDo> findAll();
+    List<ToDo> findAll(String userId);
 
     //할 일 개별조회 기능
     ToDo findOne(String id);

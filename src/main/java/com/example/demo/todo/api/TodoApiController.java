@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,17 +30,19 @@ public class TodoApiController {
 
     //할 일 목록 전체조회 요청
     @GetMapping
-    public FindAllDTO todos(){
+    public FindAllDTO todos(@AuthenticationPrincipal String userId){
         log.info("/api/todos/ GET request!");
 
         //FindAllDTO findAllDTO = service.findAllServ();
-        return service.findAllServ();
+        return service.findAllServ(userId);
     }
 
     //할 일 목록 등록 요청
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody ToDo newTodo){ //ResponseEntity<?>: 상태 코드를 같이 보낸다.
-        newTodo.setUserId("noname");
+    public ResponseEntity<?> create(
+            @AuthenticationPrincipal String userId, //시큐리티 인증 컨텍스트에서 받아오는 값
+            @RequestBody ToDo newTodo){ //ResponseEntity<?>: 상태 코드를 같이 보낸다.
+        newTodo.setUserId(userId);
         log.info("/api/todos POST request! - {}", newTodo);
 
         try {
@@ -78,11 +81,11 @@ public class TodoApiController {
     //URI: /api/todos/3 : DELETE
     // -> 3번 할 일을 삭제 후 삭제된 이후 갱신된 할 일 목록 리턴
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable String id){
+    public ResponseEntity<?> delete(@PathVariable String id, @AuthenticationPrincipal String userId){
         log.info("/api/todos/{} DELETE request!", id);
 
         try{
-            FindAllDTO dtos = service.deleteServ(id);
+            FindAllDTO dtos = service.deleteServ(id, userId);
             return ResponseEntity.ok().body(dtos);
         }catch (Exception e){
             return ResponseEntity.notFound().build();
@@ -92,7 +95,9 @@ public class TodoApiController {
 
     //할 일 수정 요청
     @PutMapping
-    public ResponseEntity<?> update(@RequestBody ToDo toDo){
+    public ResponseEntity<?> update(@RequestBody ToDo toDo, @AuthenticationPrincipal String userId){
+
+        toDo.setTitle(userId);
         log.info("/api/todos PUT request! - {}", toDo);
 
         try{
