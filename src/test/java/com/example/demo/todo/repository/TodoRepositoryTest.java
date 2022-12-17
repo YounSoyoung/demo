@@ -8,6 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+//모든 공통된 요청을 처리하는 것은 필터, 특정 요청만 처리하는 것은 인터셉터
+
 @SpringBootTest
 class TodoRepositoryTest {
     @Autowired TodoRepository repository;
