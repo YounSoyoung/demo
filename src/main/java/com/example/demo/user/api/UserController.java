@@ -1,5 +1,6 @@
 package com.example.demo.user.api;
 
+import com.example.demo.error.ErrorDTO;
 import com.example.demo.security.TokenProvider;
 import com.example.demo.user.dto.UserRequestDTO;
 import com.example.demo.user.dto.UserResponseDTO;
@@ -54,12 +55,12 @@ public class UserController {
             return ResponseEntity.ok().body(responseDTO);
 
         }catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(new ErrorDTO(e.getMessage()));
         }
 
     }
 
-    // //RequestBody나 PathValuable이 없으므로 /auth/check?email=apple@gmail.com
+    // //RequestBody나 PathVariable이 없으므로 /auth/check?email=apple@gmail.com
     @GetMapping("/check")
     public ResponseEntity<?> checkEmail(String email) { //RequestBody나 PathValuable이 없으므로
         boolean flag = userService.isDuplicate(email);

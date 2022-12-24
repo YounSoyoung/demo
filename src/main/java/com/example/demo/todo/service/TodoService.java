@@ -36,7 +36,9 @@ public class TodoService {
 //
 //        return findAllDTO;
         //변수들(toDoList, findAllDTO)이 한번만 사용되기 때문에 아래처럼 정리할 수 있다.(리펙토링 단축키: Ctrl + Alt + n)
-        return new FindAllDTO(repository.findAll(userId));
+        List<ToDo> all = repository.findAll(userId);
+        log.info("db todos: {}", all);
+        return new FindAllDTO(all);
 
 //        for(ToDo toDo : toDoList){
 //            TodoDTO dto = new TodoDTO();
@@ -59,7 +61,7 @@ public class TodoService {
 
         boolean flag = repository.save(newTodo);
 
-        if(flag) log.info("새로운 할일 [Id: {}] 이 저장되었습니다.", newTodo.getId());
+        if(flag) log.info("새로운 할일 [Id: {}] 이 저장되었습니다. {}", newTodo.getId(), newTodo);
 
         return flag ? findAllServ(newTodo.getUserId()) : null; //새로운 todo를 삽입한 후 전체목록을 반환한다.
     }

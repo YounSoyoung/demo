@@ -58,7 +58,7 @@ public class TodoApiController {
 
     }
 
-    //할 일 개별 조회 요청
+    //할 일 개별 조회 요청(할일 전체 목록이 반환되어야 실행될 수 있는 요청)
     //URI : /api/todos/3 => 3번 할 일 조회해서 클라이언트에게 리턴
     @GetMapping("/{id}")
     public ResponseEntity<?> todo(@PathVariable String  id){
@@ -97,7 +97,7 @@ public class TodoApiController {
     @PutMapping
     public ResponseEntity<?> update(@RequestBody ToDo toDo, @AuthenticationPrincipal String userId){
 
-        toDo.setTitle(userId);
+        toDo.setUserId(userId);
         log.info("/api/todos PUT request! - {}", toDo);
 
         try{
