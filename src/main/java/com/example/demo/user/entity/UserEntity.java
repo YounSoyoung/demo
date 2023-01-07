@@ -15,6 +15,7 @@ public class UserEntity {
     private String username;
     private String email;
     private String password;
+    private String profileImg;
 
     public UserEntity(){
         this.id = UUID.randomUUID().toString();
