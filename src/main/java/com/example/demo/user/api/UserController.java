@@ -41,7 +41,8 @@ public class UserController {
     //브라우저로부터 여러 타입의 정보가 넘어오기 때문에 RequestBody가 아닌 RequestPart로 바꿔주고 키값을 적어 해당하는 값을 가져온다
     //프로필 사진은 현재 필수값이 아니므로 required = false로 설정해야한다(기본값이 true이기 때문에 안바꿔주면 걸린다)
     @PostMapping("/signup")
-    public ResponseEntity<?> register(@RequestPart("userInfo") UserRequestDTO reqDto, @RequestPart(value = "profileImg", required = false) MultipartFile profileImg){
+    public ResponseEntity<?> register(@RequestPart("userInfo") UserRequestDTO reqDto,
+                                      @RequestPart(value = "profileImg", required = false) MultipartFile profileImg){
 
         try {
             //userRegDto를 서비스에 전송
